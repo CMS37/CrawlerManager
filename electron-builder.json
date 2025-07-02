@@ -1,0 +1,23 @@
+{
+  "appId": "com.reactelectron.app",
+  "productName": "ReactElectronApp",
+  "directories": {
+    "output": "dist_electron"
+  },
+  "files": [
+    "dist/**/*",
+    "main.js"
+  ],
+  "win": {
+    "target": "nsis",
+    "icon": "public/assets/app-icon.ico"
+  },
+  "mac": {
+    "target": "dmg",
+    "icon": "public/assets/app-icon.icns"
+  },
+  "linux": {
+    "target": "AppImage",
+    "icon": "public/assets/app-icon.png"
+  }
+}
