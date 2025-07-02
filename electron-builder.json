@@ -6,7 +6,8 @@
   },
   "files": [
     "dist/**/*",
-    "main.js"
+    "main.js",
+    "preload.js"
   ],
   "win": {
     "target": "nsis",

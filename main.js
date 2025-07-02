@@ -21,8 +21,8 @@ app.on('ready', () => {
         },
     });
 
-    mainWindow.loadURL('http://localhost:5173'); // React 개발 서버 URL
-    // mainWindow.loadFile('dist/index.html'); // React 빌드 파일 경로
+    // mainWindow.loadURL('http://localhost:5173'); // React 개발 서버 URL
+    mainWindow.loadFile('dist/index.html'); // React 빌드 파일 경로
 
     mainWindow.on('closed', () => {
         mainWindow = null;
