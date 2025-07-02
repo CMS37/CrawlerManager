@@ -16,159 +16,100 @@ app.on('ready', () => {
         height: 600,
         webPreferences: {
             nodeIntegration: true,
-            contextIsolation: true, // contextBridge를 사용하기 위해 true로 설정
-            preload: path.join(__dirname, 'preload.js'), // preload.js 경로
+            contextIsolation: true,
+            preload: path.join(__dirname, 'preload.js'),
         },
     });
 
-    // mainWindow.loadURL('http://localhost:5173'); // React 개발 서버 URL
-    mainWindow.loadFile('dist/index.html'); // React 빌드 파일 경로
+    mainWindow.loadURL('http://localhost:5173');
+    // mainWindow.loadFile('dist/index.html'); // React 빌드 파일 경로
 
     mainWindow.on('closed', () => {
         mainWindow = null;
     });
 
-    // IPC를 통해 로그인 요청 처리
-    ipcMain.handle('login', async (event, { userId, password }) => {
+    async function fetchApi(endpoint, options = {}) {
         try {
-            const response = await fetch(`${API_BASE_URL}/login`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ userId, password })
-            });
-
+            const response = await fetch(`${API_BASE_URL}${endpoint}`, options);
             const data = await response.json();
             if (response.ok) {
                 return { success: true, data };
             } else {
-                return { success: false, message: data.message || '아이디 또는 비밀번호가 올바르지 않습니다.' };
+                return { success: false, message: data.message || '요청 실패' };
             }
-        } catch {
-            return { success: false, message: '로그인 서버 오류' };
+        } catch (error) {
+            console.error('API 요청 중 오류 발생:', error);
+            return { success: false, message: '서버 오류가 발생했습니다.' };
         }
+    }
+
+    ipcMain.handle('login', async (event, { userId, password }) => {
+        return fetchApi('/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ userId, password }),
+        });
     });
 
     ipcMain.handle('fetch-pending-list', async (event, { authToken }) => {
-        try {
-            const response = await fetch(`${API_BASE_URL}/admin/pending-users`, {
-                method: 'GET',
-                headers: {
-                    'Authorization': `Bearer ${authToken}`,
-                    'Content-Type': 'application/json',
-                },
-            });
-
-            const data = await response.json();
-            if (response.ok) {
-                return data;
-            } else {
-                throw new Error(data.message || '승인 목록을 가져오는 데 실패했습니다.');
-            }
-        } catch (error) {
-            console.error('Error fetching approval list:', error);
-            throw error;
-        }
+        return fetchApi('/admin/pending-users', {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${authToken}`,
+                'Content-Type': 'application/json',
+            },
+        });
     });
 
     ipcMain.handle('fetch-user-list', async (event, { authToken }) => {
-        try {
-            const response = await fetch(`${API_BASE_URL}/admin/users`, {
-                method: 'GET',
-                headers: {
-                    'Authorization': `Bearer ${authToken}`,
-                    'Content-Type': 'application/json',
-                },
-            });
-
-            const data = await response.json();
-            if (response.ok) {
-                return data;
-            } else {
-                throw new Error(data.message || '사용자 목록을 가져오는 데 실패했습니다.');
-            }
-        } catch (error) {
-            console.error('Error fetching user list:', error);
-            throw error;
-        }
+        return fetchApi('/admin/users', {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${authToken}`,
+                'Content-Type': 'application/json',
+            },
+        });
     });
 
     ipcMain.handle('approve-user', async (event, { authToken, userId }) => {
-        try {
-            const response = await fetch(`${API_BASE_URL}/admin/approve-user`, {
-                method: 'POST',
-                headers: {
-                    'Authorization': `Bearer ${authToken}`,
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ userId }),
-            });
-
-            if (!response.ok) {
-                throw new Error('승인 요청 실패');
-            }
-        } catch (error) {
-            console.error('Error approving user:', error);
-            throw error;
-        }
+        return fetchApi('/admin/approve-user', {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${authToken}`,
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ userId }),
+        });
     });
 
     ipcMain.handle('reject-user', async (event, { authToken, userId }) => {
-        try {
-            const response = await fetch(`${API_BASE_URL}/admin/reject-user`, {
-                method: 'POST',
-                headers: {
-                    'Authorization': `Bearer ${authToken}`,
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ userId }),
-            });
-
-            if (!response.ok) {
-                throw new Error('거부 요청 실패');
-            }
-        } catch (error) {
-            console.error('Error rejecting user:', error);
-            throw error;
-        }
+        return fetchApi('/admin/reject-user', {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${authToken}`,
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ userId }),
+        });
     });
 
     ipcMain.handle('remove-user', async (event, { authToken, userId }) => {
-        try {
-            const response = await fetch(`${API_BASE_URL}/admin/remove-user`, {
-                method: 'POST',
-                headers: {
-                    'Authorization': `Bearer ${authToken}`,
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ userId }),
-            });
-
-            if (!response.ok) {
-                throw new Error('삭제 요청 실패');
-            }
-        } catch (error) {
-            console.error('Error removing user:', error);
-            throw error;
-        }
+        return fetchApi('/admin/remove-user', {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${authToken}`,
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ userId }),
+        });
     });
 
     ipcMain.handle('signup', async (event, { name, userId, password }) => {
-        try {
-            const response = await fetch(`${API_BASE_URL}/signup`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name, userId, password })
-            });
-
-            const data = await response.json();
-            if (response.ok) {
-                return { success: true, data };
-            } else {
-                return { success: false, message: data.message || '회원가입에 실패했습니다.' };
-            }
-        } catch {
-            return { success: false, message: '서버 오류가 발생했습니다.' };
-        }
+        return fetchApi('/signup', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name, userId, password }),
+        });
     });
 });
 
@@ -180,22 +121,10 @@ app.on('window-all-closed', () => {
 
 app.on('activate', () => {
     if (mainWindow === null) {
-        mainWindow = new BrowserWindow({
-            width: 800,
-            height: 600,
-            webPreferences: {
-                nodeIntegration: true,
-                contextIsolation: true, // contextBridge를 사용하기 위해 true로 설정
-                enableRemoteModule: true, // 추가된 옵션
-                preload: path.join(__dirname, 'preload.js'), // preload.js 경로
-            },
-        });
-
-        mainWindow.loadURL('http://localhost:5173');
+        app.emit('ready');
     }
 });
 
-// Content Security Policy 설정
 app.on('web-contents-created', (event, contents) => {
     contents.session.webRequest.onHeadersReceived((details, callback) => {
         callback({

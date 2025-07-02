@@ -1,6 +1,7 @@
 import React from 'react';
-import '../App.css';
-import platforms from '../data/platforms';
+import './Platform.css';
+
+import platforms from '../../data/platforms';
 
 const PlatformSelection = ({ onSelectPlatform}) => {
     return (

@@ -1,0 +1,55 @@
+.card {
+    max-width: 400px;
+    margin: auto;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.card h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.card form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.card input {
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 90%;
+}
+
+.card button {
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+}
+
+button.secondary {
+    background: #444;
+    color: #bbb;
+    margin: 10px 0; /* 입력 필드와 동일한 margin 값 설정 */
+}
+
+.card button:hover {
+    background-color: #0056b3;
+}
+
+button.secondary:hover {
+    background: #555;
+    color: #fff;
+}
+
+.card p {
+    color: red;
+    text-align: center;
+}

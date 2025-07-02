@@ -1,28 +1,34 @@
 import React, { useState } from 'react';
-import '../App.css';
-import { loginApi } from '../api/authApi';
+import './Login.css';
+import { loginApi } from '../../api/authApi';
 
 const Login = ({ onLoginSuccess, onSignup }) => {
     const [userId, setUserId] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
 
+    const handleApiCall = async (apiFunction, onSuccess, onError) => {
+        try {
+            const response = await apiFunction();
+            if (response.success) {
+                onSuccess(response);
+            } else {
+                onError(response.message);
+            }
+        } catch (err) {
+            console.error('API Error:', err);
+            onError('서버 오류');
+        }
+    };
+
     const handleLogin = async (e) => {
         e.preventDefault();
         setError('');
-
-        try {
-            const response = await loginApi(userId, password);
-
-            if (response.success) {
-                onLoginSuccess(response.data.token, response.data.role, response.data.name);
-            } else {
-                setError(response.message);
-            }
-        } catch (err) {
-            console.error('Error during login:', err);
-            setError('로그인 서버 오류');
-        }
+        handleApiCall(
+            () => loginApi(userId, password),
+            (response) => onLoginSuccess(response.data.token, response.data.role),
+            (message) => setError(message)
+        );
     };
 
     const handleSignup = () => {

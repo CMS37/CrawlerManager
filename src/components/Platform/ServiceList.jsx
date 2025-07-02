@@ -1,6 +1,7 @@
 import React from 'react';
-import '../App.css';
-import servicesByPlatform from '../data/services';
+import './Platform.css';
+import '../../styles/common.css';
+import servicesByPlatform from '../../data/services';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 

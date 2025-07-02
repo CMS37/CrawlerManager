@@ -1,0 +1,151 @@
+/* Admin.css */
+
+.admin-menu {
+    padding: 20px;
+    background-color: #2e2e3e;
+    color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    margin: 20px auto;
+    max-width: 600px;
+    text-align: center;
+}
+
+.menu-card-container {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.menu-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 150px;
+    height: 150px;
+    background: #2e2e3e;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    transition: transform 0.3s, background 0.3s;
+}
+
+.menu-card:hover {
+    transform: scale(1.05);
+    background: #3e3e4e;
+}
+
+.menu-icon {
+    font-size: 40px;
+    color: #4a90e2;
+    margin-bottom: 10px;
+}
+
+.menu-card p {
+    font-size: 16px;
+    color: #ffffff;
+    margin: 0;
+}
+
+/* 반응형 디자인 추가 */
+@media (max-width: 768px) {
+    .menu-card-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .menu-card {
+        width: 100%;
+        margin-bottom: 15px;
+    }
+}
+
+.user-list {
+    max-height: 200px;
+    overflow-y: auto;
+    margin: 10px 0;
+    padding: 0;
+    list-style: none;
+    border: 1px solid #444;
+    border-radius: 8px;
+    background: #3e3e4e;
+}
+
+.user-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #444;
+    cursor: pointer;
+}
+
+.user-item.selected {
+    background: #5a5a7a;
+}
+
+.user-item:last-child {
+    border-bottom: none;
+}
+
+.action-buttons {
+    float: right;
+    gap: 10px;
+}
+.approve-button,
+.reject-button {
+    width: 40px; /* 정사각형 버튼 너비 */
+    height: 40px; /* 정사각형 버튼 높이 */
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    border-radius: 4px; /* 둥글게 */
+    cursor: pointer;
+}
+
+.approve-button {
+    border: none;
+    border-radius: 4px;
+    background: #28a745; /* 초록색 */
+    color: #fff;
+    cursor: pointer;
+    white-space: nowrap;
+    margin-right: 10px; /* 승인 버튼과 거부 버튼 사이의 간격 */
+}
+
+.approve-button:hover {
+    background: #218838; /* 더 어두운 초록색 */
+}
+
+.reject-button {
+    border: none;
+    border-radius: 4px;
+    background: #dc3545; /* 빨간색 */
+    color: #fff;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.reject-button:hover {
+    background: #c82333; /* 더 어두운 빨간색 */
+}
+
+.delete-button {
+    padding: 5px;
+    border: none;
+    border-radius: 4px;
+    background: #e74c3c;
+    color: #fff;
+    cursor: pointer;
+    font-size: 14px;
+    white-space: nowrap;
+    width: auto; /* 글씨만큼 버튼 길이를 설정 */
+    margin-left: auto;
+}
+
+.delete-button:hover {
+    background: #c0392b;
+}

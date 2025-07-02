@@ -1,0 +1,100 @@
+.platform-selection {
+    text-align: center;
+    padding: 20px;
+}
+
+.platform-header {
+    margin-bottom: 20px;
+}
+
+.platform-list {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.platform-card {
+    background: #2e2e3e;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    padding: 10px;
+    width: 150px;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.platform-image {
+    width: 100px;
+    height: 80px;
+    object-fit: contain;
+    border-radius: 8px;
+    margin: 0 auto 10px auto;
+}
+
+.platform-card p {
+    margin-top: 10px;
+    color: #fff;
+    font-size: 16px;
+    text-align: center; /* 이름 중앙 정렬 */
+}
+
+.platform-card:hover {
+    transform: scale(1.05);
+}
+
+.platform-image {
+    max-width: 100px;
+    margin-bottom: 10px;
+}
+
+.platform-card p {
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.service-list {
+    text-align: center;
+    padding: 20px;
+}
+
+.service-list-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+/* 서비스 목록 스타일 */
+.service-card {
+    background: #2e2e3e;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    padding: 10px;
+    width: 150px;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.service-card:hover {
+    transform: scale(1.05);
+}
+
+
+.service-card p {
+    color: #fff;
+    font-size: 16px;
+    margin: 0;
+}
+
+.service-header {
+    display: flex;
+    justify-content: center; /* 플랫폼 이름을 가운데 정렬 */
+    align-items: center;
+    margin-bottom: 20px;
+}
+
