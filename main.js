@@ -22,7 +22,7 @@ app.on('ready', () => {
     });
 
     mainWindow.loadURL('http://localhost:5173');
-    // mainWindow.loadFile('dist/index.html'); // React 빌드 파일 경로
+    // mainWindow.loadFile('dist/index.html');
 
     mainWindow.on('closed', () => {
         mainWindow = null;

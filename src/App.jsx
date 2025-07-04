@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGear } from '@fortawesome/free-solid-svg-icons';
 import AdminMenu from './components/Admin/AdminMenu';
 import Signup from './components/Login/Signup';
+import OliveYoungRanking from './components/Platform/OliveYoung/OliveYoungRanking';
 
 function App() {
 	const [currentView, setCurrentView] = useState('login');
@@ -33,12 +34,8 @@ function App() {
 		handleViewChange('service-list');
 	};
 
-	const handleAdminMenuBack = () => {
-		handleViewChange('platform-selection');
-	};
-
 	const handleSelectService = (serviceId) => {
-		console.log(`Selected service: ${serviceId}`);
+		handleViewChange(`service-${serviceId}`);
 	};
 
 	return (
@@ -67,17 +64,20 @@ function App() {
 					platformId={selectedPlatform}
 					platformName={selectedPlatformName}
 					onSelectService={handleSelectService}
-					onBack={handleAdminMenuBack}
+					onBack={() => handleViewChange('platform-selection')}
 				/>
 			)}
 			{currentView === 'admin-menu' && (
-				<AdminMenu onBack={handleAdminMenuBack} />
+				<AdminMenu onBack={() => handleViewChange('platform-selection')} />
 			)}
 			{currentView === 'signup' && (
 				<Signup
 					onSignupSuccess={() => handleViewChange('login')}
 					onBackToLogin={() => handleViewChange('login')}
 				/>
+			)}
+			{currentView === 'service-1' && (
+				<OliveYoungRanking onBack={() => handleViewChange('service-list')} />
 			)}
 		</div>
 	);
